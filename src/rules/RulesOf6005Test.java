@@ -22,4 +22,34 @@ public class RulesOf6005Test {
         assertTrue("Expected true: self-written required code",
                 RulesOf6005.mayUseCodeInAssignment(true, false, true, true, true));
     }
+
+    /**
+     * Cited, publicly available code that was not course work and is not
+     * a required feature should be allowed.
+     */
+    @Test
+    public void testCitedPublicCodeAllowed() {
+        assertTrue("Expected true: cited, public, non-course code",
+                RulesOf6005.mayUseCodeInAssignment(false, true, false, true, false));
+    }
+
+    /**
+     * Code written as past 6.005 course work should not be allowed,
+     * even if it is public and cited.
+     */
+    @Test
+    public void testPastCourseWorkNotAllowed() {
+        assertFalse("Expected false: code written as past 6.005 work",
+                RulesOf6005.mayUseCodeInAssignment(false, true, true, true, false));
+    }
+
+    /**
+     * Code from elsewhere should not be allowed if the assignment
+     * specifically requires implementing that feature yourself.
+     */
+    @Test
+    public void testRequiredFeatureNotAllowed() {
+        assertFalse("Expected false: assignment requires implementing it",
+                RulesOf6005.mayUseCodeInAssignment(false, true, false, true, true));
+    }
 }
